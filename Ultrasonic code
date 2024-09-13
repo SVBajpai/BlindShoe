@@ -1,0 +1,55 @@
+#define echo_pin 5 //variable declaration / pin initialization
+#define trigger_pin 6
+#define echo_pin1 7 //variable declaration / pin initialization
+#define trigger_pin1 8
+#define Buzzer 2
+#define LED 12
+long duration; 
+int distance;
+void setup( )
+{
+pinMode(trigger_pin, OUTPUT); //Initialize the digital pin as output
+  pinMode(echo_pin, INPUT); //Initialize the digital pin as input
+  pinMode(trigger_pin1, OUTPUT); //Initialize the digital pin as output
+  pinMode(echo_pin, INPUT); //Initialize the digital pin as input
+  pinMode(Buzzer, OUTPUT);
+  pinMode(LED, OUTPUT);
+  Serial.begin(9600);
+}
+void loop( )
+{
+SonarSensor(trigger_pin, echo_pin); 
+int Sensor1 = distance;
+if(distance<15)
+{
+  digitalWrite(Buzzer, HIGH); 
+}else
+{
+   digitalWrite(Buzzer, LOW); 
+}
+SonarSensor(trigger_pin1, echo_pin1);
+int Sensor2 = distance;
+
+Serial.print(Sensor1);
+Serial.print(" - ");
+Serial.println();
+Serial.print(Sensor2);
+Serial.print(" - ");
+Serial.println();
+delay(1000);
+}
+void SonarSensor (int trigPin,int echoPin)
+{
+digitalWrite(trigger_pin, LOW); // Clears the trigger pin 
+      delayMicroseconds(2); 
+digitalWrite(trigger_pin, HIGH); // Set the trigger_in on HIGH state for 10 micro seconds 
+delayMicroseconds(10); 
+digitalWrite(trigger_pin, LOW); 
+duration = pulseIn(echo_pin, HIGH); // Read the echo_pin, returns the sound wave travel time in microseconds 
+distance= duration*0.034/2; // Calculate the distance 
+
+}
+   
+   
+   
+   
